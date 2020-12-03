@@ -1,0 +1,3 @@
+/Users/zloadmin/projects/cleanLogo/CMakeFiles/rebuild_cache.dir
+/Users/zloadmin/projects/cleanLogo/CMakeFiles/edit_cache.dir
+/Users/zloadmin/projects/cleanLogo/CMakeFiles/cleanLogo.dir

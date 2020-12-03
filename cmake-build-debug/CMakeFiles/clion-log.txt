@@ -1,0 +1,9 @@
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/zloadmin/projects/cleanLogo
+CMake Error at CMakeLists.txt:8 (target_link_libraries):
+  Cannot specify link libraries for target "DisplayImage" which is not built
+  by this project.
+
+
+-- Configuring incomplete, errors occurred!
+See also "/Users/zloadmin/projects/cleanLogo/cmake-build-debug/CMakeFiles/CMakeOutput.log".
+See also "/Users/zloadmin/projects/cleanLogo/cmake-build-debug/CMakeFiles/CMakeError.log".
