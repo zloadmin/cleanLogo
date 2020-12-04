@@ -95,7 +95,7 @@ bool initLogo(char **argv) {
 bool initNewLogo(char **argv) {
     new_logo = imread(argv[2], 1);
     if (!new_logo.data) {
-        cout << "Can not load new logo file " << argv[2] <<  endl;
+        cout << "Can not load new logo file " << argv[2] << endl;
         return false;
     }
     cout << "Loaded new logo " << argv[2] << " Size col " << new_logo.cols << " row " << new_logo.rows << endl;
@@ -108,17 +108,17 @@ bool initFile(char **argv) {
         cout << "Can not load file " << argv[3] << endl;
         return false;
     }
-    cout << "Loaded file " << argv[3]  << " Size col " << img.cols << " row " << img.rows << endl;
+    cout << "Loaded file " << argv[3] << " Size col " << img.cols << " row " << img.rows << endl;
     original = img;
     return true;
 }
 
-bool checkImageSize()
-{
-    if(img.cols > logo.cols && img.rows > logo.rows) return true;
+bool checkImageSize() {
+    if (img.cols > logo.cols && img.rows > logo.rows) return true;
     cout << "Image smallest then logo" << endl;
     return false;
 }
+
 string getNewFilePath(char **argv) {
     fs::path absolute_path = fs::absolute(argv[3]);
     string s(absolute_path);
