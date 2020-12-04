@@ -7,7 +7,7 @@
 using namespace std;
 using namespace cv;
 
-bool replaceLogo(CV_IN_OUT Mat& img, CV_IN_OUT Mat temp);
+bool replaceLogo(CV_IN_OUT Mat& img, CV_IN_OUT Mat& logo, CV_IN_OUT Mat& new_logo);
 
 const double MAX_VAL = 0.8f;
 const int LIMIT = 20;
@@ -18,13 +18,14 @@ const int LIMIT = 20;
 int main( int, char** argv )
 {
 
-    Mat img; Mat templ; Mat result;
-    img = imread( argv[1], 1 );
-    templ = imread( argv[2], 1 );
+
+    Mat img = imread( "test.jpeg", 1 );
+    Mat logo = imread( "logo.jpg", 1 );
+    Mat new_logo = imread( "new_logo.jpg", 1 );
 
     int i = 0;
     while (true) {
-        bool is_replaced = replaceLogo(img, templ);
+        bool is_replaced = replaceLogo(img, logo, new_logo);
        ++i;
        if(!is_replaced) {
            cout << "Logo has not been replaced" << endl;
@@ -39,19 +40,16 @@ int main( int, char** argv )
     imwrite("new_image.jpeg", img);
     return 0;
 }
-bool replaceLogo(CV_IN_OUT Mat& img, CV_IN_OUT Mat temp)
+bool replaceLogo(CV_IN_OUT Mat& img, CV_IN_OUT Mat& logo, CV_IN_OUT Mat& new_logo)
 {
     Mat result;
-    matchTemplate(img, temp, result, 5);
+    matchTemplate(img, logo, result, 5);
     double minVal; double maxVal; Point minLoc; Point maxLoc; Point matchLoc;
     minMaxLoc( result, &minVal, &maxVal, &minLoc, &maxLoc, Mat() );
     if(maxVal > MAX_VAL) {
         matchLoc = maxLoc;
-        cout << "minVal - " << minVal << endl;
-        cout << "maxVal - " << maxVal << endl;
-        cout << "minLoc - " << minLoc << endl;
-        cout << "maxLoc - " << maxLoc << endl;
-        rectangle(img, matchLoc, Point(matchLoc.x + temp.cols , matchLoc.y + temp.rows ), Scalar::all(0), CV_FILLED, 8, 0 );
+        cout << "Logo has been found" << "Coordinates " << maxLoc << endl;
+        new_logo.copyTo(img(cv::Rect(matchLoc.x,matchLoc.y,new_logo.cols, new_logo.rows)));
         return true;
     } else {
         cout << "Logo has not found" << endl;
