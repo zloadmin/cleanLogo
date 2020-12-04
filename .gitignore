@@ -2,3 +2,7 @@ new_image.jpeg
 test.jpeg
 test_no.jpeg
 test_images
+cmake-build-debug
+.idea
+CMakeCache.txt
+CMakeFiles
