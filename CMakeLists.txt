@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 project(cleanLogo)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 cmake_minimum_required(VERSION 2.8)
 find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS} )
