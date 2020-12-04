@@ -7,7 +7,7 @@
 #IncludeRegexTransform: 
 
 /Users/zloadmin/projects/cleanLogo/main.cpp
-stdio.h
+cstdio
 -
 opencv2/opencv.hpp
 -
