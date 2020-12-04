@@ -8,3 +8,4 @@ CMakeCache.txt
 CMakeFiles
 .DS_Store
 cmake_install.cmake
+Makefile
