@@ -8,5 +8,7 @@ add_executable(cleanLogo main.cpp)
 target_link_libraries( cleanLogo ${OpenCV_LIBS} )
 
 if (LINUX)
+    set(CMAKE_C_COMPILER /usr/local/bin/gcc)
+    set(CMAKE_CXX_COMPILER /usr/local/bin/g++)
     target_link_libraries(cleanLogo stdc++fs)
 endif (LINUX)
