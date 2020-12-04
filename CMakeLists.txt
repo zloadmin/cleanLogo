@@ -6,3 +6,7 @@ find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 add_executable(cleanLogo main.cpp)
 target_link_libraries( cleanLogo ${OpenCV_LIBS} )
+
+if (LINUX)
+    target_link_libraries(cleanLogo stdc++fs)
+endif (LINUX)
