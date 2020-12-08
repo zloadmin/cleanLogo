@@ -53,8 +53,8 @@ int main(int argc, char **argv) {
     }
     if (i) {
         cout << "Save image" << endl;
-        imwrite(getNewFilePath(argv), img);
-        imwrite(getOldFilePath(argv), original);
+        imwrite(getOldFilePath(argv), img);
+        imwrite(getNewFilePath(argv), original);
     }
     return 0;
 }
