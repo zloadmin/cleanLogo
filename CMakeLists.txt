@@ -14,6 +14,7 @@ if(LINUX)
     message(STATUS ">>> Linux")
     target_link_libraries(cleanLogo stdc++fs)
 #    export CC=`which gcc`
+#    export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64
 else()
     message(STATUS ">>> Not Linux")
     # stuff that should happen not on Linux
