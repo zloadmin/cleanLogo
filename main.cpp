@@ -4,12 +4,13 @@
 #include <iostream>
 #include <experimental/filesystem>
 #include <regex>
+#include <errno.h>
 
 using namespace std;
 using namespace cv;
 namespace fs = std::filesystem;
 
-bool replaceLogo(CV_IN_OUT Mat &img, CV_IN_OUT Mat &logo, CV_IN_OUT Mat &new_logo);
+bool replaceLogo(CV_IN_OUT Mat &img, CV_IN_OUT Mat &logo, CV_IN_OUT Mat &new_logo, double max_val);
 
 bool init(int argc, char **argv);
 
@@ -25,6 +26,8 @@ string getOldFilePath(char **argv);
 
 bool checkImageSize();
 
+double getMaxVal(int argc, char **argv);
+
 const double MAX_VAL = 0.8f;
 const int LIMIT = 20;
 Mat img;
@@ -38,10 +41,12 @@ Mat original;
 int main(int argc, char **argv) {
     // Init
     if (!init(argc, argv)) return -1;
+    double  max_val = getMaxVal(argc, argv);
+    cout << "Score " << max_val << endl;
 
     int i = 0;
     while (true) {
-        bool is_replaced = replaceLogo(img, logo, new_logo);
+        bool is_replaced = replaceLogo(img, logo, new_logo, max_val);
         if (!is_replaced) break;
         if (i > LIMIT) break;
         ++i;
@@ -54,7 +59,7 @@ int main(int argc, char **argv) {
     return 0;
 }
 
-bool replaceLogo(CV_IN_OUT Mat &img, CV_IN_OUT Mat &logo, CV_IN_OUT Mat &new_logo) {
+bool replaceLogo(CV_IN_OUT Mat &img, CV_IN_OUT Mat &logo, CV_IN_OUT Mat &new_logo, double max_val) {
     Mat result;
     matchTemplate(img, logo, result, 5);
     double minVal;
@@ -63,9 +68,9 @@ bool replaceLogo(CV_IN_OUT Mat &img, CV_IN_OUT Mat &logo, CV_IN_OUT Mat &new_log
     Point maxLoc;
     Point matchLoc;
     minMaxLoc(result, &minVal, &maxVal, &minLoc, &maxLoc, Mat());
-    if (maxVal > MAX_VAL) {
+    if (maxVal > max_val) {
         matchLoc = maxLoc;
-        cout << "Logo has been found. " << "Coordinates: " << maxLoc << endl;
+        cout << "Logo has been found. Coordinates: " << maxLoc << endl;
         new_logo.copyTo(img(cv::Rect(matchLoc.x, matchLoc.y, new_logo.cols, new_logo.rows)));
         return true;
     } else {
@@ -109,7 +114,7 @@ bool initFile(char **argv) {
         return false;
     }
     cout << "Loaded file " << argv[3] << " Size col " << img.cols << " row " << img.rows << endl;
-    original = img;
+    original = img.clone();
     return true;
 }
 
@@ -128,4 +133,17 @@ string getNewFilePath(char **argv) {
 
 string getOldFilePath(char **argv) {
     return fs::absolute(argv[3]);
+}
+
+
+double getMaxVal(int argc, char **argv) {
+    if(argc < 5) return MAX_VAL;
+    char *p;
+    errno = 0;
+    double conv = strtod(argv[4], &p);
+    if(errno != 0 || *p != '\0' || conv > INT_MAX) {
+        return MAX_VAL;
+    } else {
+        return conv;
+    }
 }
