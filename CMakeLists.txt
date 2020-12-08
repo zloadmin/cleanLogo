@@ -13,7 +13,7 @@ endif()
 if(LINUX)
     message(STATUS ">>> Linux")
     target_link_libraries(cleanLogo stdc++fs)
-
+#    export CC=`which gcc`
 else()
     message(STATUS ">>> Not Linux")
     # stuff that should happen not on Linux
